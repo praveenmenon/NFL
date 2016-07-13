@@ -33,6 +33,8 @@ function(req, res){
   var infoSlot = req.slot('Player').toLowerCase();
   var information = playerId[infoSlot],
   reprompt = 'Tell me a player name';
+  console.log("Info Slot:", infoSlot);
+  console.log("Information", information);
   var prompt = '';
   
   if (information) {
@@ -43,21 +45,18 @@ function(req, res){
         team: results.CurrentTeam,
         position: results.PositionCategory
       });
-      console.log("prompt inside:",prompt);
-    }); 
-
-      prompt = "Von Miller was born"
+      console.log("prompt:",prompt);
       res.say(prompt).reprompt(reprompt).card({
         type: "Standard",
         title: "Player Basic Introduction",
         text: information,
-      image: {                //image is optional 
-        smallImageUrl: "https://s3.amazonaws.com/qwinix-echo/small.jpg",
-        largeImageUrl: "https://s3.amazonaws.com/qwinix-echo/large.jpg"
-      } 
-    }).shouldEndSession(false).send();
-      return true;
-    
+        image: {                //image is optional 
+          smallImageUrl: "https://s3.amazonaws.com/qwinix-echo/small.jpg",
+          largeImageUrl: "https://s3.amazonaws.com/qwinix-echo/large.jpg"
+        } 
+      }).shouldEndSession(false).send();
+    }); 
+    return false;
   } else {
     var speech;
     var reprompt = 'What else can I help you with?' 
